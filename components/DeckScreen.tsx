@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 18,
     textAlign: "center",
-    fontWeight: "600",
+    fontWeight: "400",
+    lineHeight: 30
   },
 });
