@@ -25,4 +25,10 @@ export interface DeckButtonsInterface {
   showAnswer: boolean;
   setCurrentCardIndex: any;
   currentCardIndex: number;
+  handleShuffle: () => void;
+  handleShow: () => void;
+  handleAutoPlay: () => void;
+  handlePrevCard: () => void;
+  handleNextCard: () => void;
+  isAutoPlaying: boolean;
 }

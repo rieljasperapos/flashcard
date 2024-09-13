@@ -1,29 +1,24 @@
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { DeckButtonsInterface } from "@/types/topic-data";
+import Entypo from '@expo/vector-icons/Entypo';
 
 export default function DeckButtons({
   topic,
-  setShowAnswer,
   showAnswer,
-  setCurrentCardIndex,
   currentCardIndex,
+  handleShuffle,
+  handleShow,
+  handleAutoPlay,
+  handlePrevCard,
+  handleNextCard,
+  isAutoPlaying,
 }: DeckButtonsInterface) {
-  const handleNextCard = () => {
-    if (currentCardIndex < topic.numberOfCards - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-      setShowAnswer(false);
-    }
-  };
-
-  const handlePrevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(currentCardIndex - 1);
-      setShowAnswer(false);
-    }
-  };
   return (
     <View style={styles.buttonContainer}>
+      <TouchableOpacity onPress={handleAutoPlay}>
+        {isAutoPlaying ? <FontAwesome name="pause-circle-o" size={36} color="#6366F1" /> : <FontAwesome name="play-circle-o" size={36} color="#6366F1" />} 
+      </TouchableOpacity>
       <TouchableOpacity
         onPress={handlePrevCard}
         disabled={currentCardIndex === 0}
@@ -36,7 +31,7 @@ export default function DeckButtons({
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.showAnswerButton}
-        onPress={() => setShowAnswer(!showAnswer)}
+        onPress={handleShow}
       >
         <Text style={styles.showAnswerText}>
           {showAnswer ? "Hide answer" : "Show answer"}
@@ -54,6 +49,13 @@ export default function DeckButtons({
               ? "#E2E8F0"
               : "#6366F1"
           }
+        />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleShuffle}>
+        <Entypo 
+          name="shuffle"
+          size={36}
+          color="#6366F1"
         />
       </TouchableOpacity>
     </View>
