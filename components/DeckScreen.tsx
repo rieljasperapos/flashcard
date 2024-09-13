@@ -68,13 +68,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 30,
     backgroundColor: "#fff",
   },
   header: {
     display: 'flex',
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 30,
     justifyContent: 'space-between'
   },
   title: {
