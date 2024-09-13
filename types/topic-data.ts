@@ -11,10 +11,18 @@ export interface topicData {
   flashcards: flashCards[];
 };
 
-export interface DeckScreenProps {
+export interface TopicProps {
   topic: topicData;
 }
 
 export interface HomePageProps {
   topics: topicData[];
+}
+
+export interface DeckButtonsInterface {
+  topic: topicData;
+  setShowAnswer: any;
+  showAnswer: boolean;
+  setCurrentCardIndex: any;
+  currentCardIndex: number;
 }

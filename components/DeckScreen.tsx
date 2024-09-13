@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { topicData } from "@/types/topic-data";
 import DeckHeader from "@/components/DeckHeader";
 import DeckButtons from "./DeckButtons";
-import { DeckScreenProps } from "@/types/topic-data";
+import { TopicProps } from "@/types/topic-data";
 
-export default function DeckScreen({ topic }: DeckScreenProps) {
+export default function DeckScreen({ topic }: TopicProps) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
@@ -40,19 +38,6 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#fff",
   },
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 30,
-  },
-  title: {
-    flex: 1,
-    fontSize: 20,
-    fontWeight: "600",
-    textAlign: "center",
-  },
   progress: {
     fontSize: 16,
     color: "#718096",
@@ -79,21 +64,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     fontWeight: "600",
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  showAnswerButton: {
-    backgroundColor: "#6366F1",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-  },
-  showAnswerText: {
-    color: "#fff",
-    fontSize: 16,
   },
 });

@@ -1,13 +1,9 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
-import { useNavigation, RouteProp } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
-import { topicData } from "@/types/topic-data";
+import { TopicProps } from "@/types/topic-data";
 
-interface DeckHeaderProps {
-  topic: topicData;
-}
-
-export default function DeckHeader({topic}: DeckHeaderProps) {
+export default function DeckHeader({topic}: TopicProps) {
   const navigation = useNavigation();
   return (
     <View style={styles.header}>

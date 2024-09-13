@@ -1,15 +1,6 @@
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
-import { useState } from "react";
-import { topicData } from "@/types/topic-data";
 import { FontAwesome } from "@expo/vector-icons";
-
-interface DeckButtonsInterface {
-  topic: topicData;
-  setShowAnswer: any;
-  showAnswer: boolean;
-  setCurrentCardIndex: any;
-  currentCardIndex: number;
-}
+import { DeckButtonsInterface } from "@/types/topic-data";
 
 export default function DeckButtons({
   topic,
@@ -18,7 +9,6 @@ export default function DeckButtons({
   setCurrentCardIndex,
   currentCardIndex,
 }: DeckButtonsInterface) {
-  // const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const handleNextCard = () => {
     if (currentCardIndex < topic.numberOfCards - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
