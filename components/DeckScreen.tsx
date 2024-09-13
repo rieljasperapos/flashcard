@@ -1,31 +1,17 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation, RouteProp } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
 import { topicData } from "@/types/topic-data";
+import DeckHeader from "@/components/DeckHeader";
+import DeckButtons from "./DeckButtons";
 
 interface DeckScreenProps {
   topic: topicData;
 }
 
 const DeckScreen = ({topic}: DeckScreenProps) => {
-  const navigation = useNavigation();
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-
-  const handleNextCard = () => {
-    if (currentCardIndex < topic.numberOfCards - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-      setShowAnswer(false);
-    }
-  };
-
-  const handlePrevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(currentCardIndex - 1);
-      setShowAnswer(false);
-    }
-  };
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const handleViewClick = () => {
     setShowAnswer(!showAnswer);
@@ -33,12 +19,7 @@ const DeckScreen = ({topic}: DeckScreenProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FontAwesome name="arrow-left" size={24} color="#718096" />
-        </TouchableOpacity>
-        <Text style={styles.title}>{topic.title}</Text>
-      </View>
+      <DeckHeader  topic={topic}/>
       <Text style={styles.progress}>
         {currentCardIndex + 1} of {topic.flashcards.length} cards
       </Text>
@@ -47,19 +28,7 @@ const DeckScreen = ({topic}: DeckScreenProps) => {
           {showAnswer ? topic.flashcards[currentCardIndex].answer : topic.flashcards[currentCardIndex].question}
         </Text>
       </TouchableOpacity>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handlePrevCard} disabled={currentCardIndex === 0}>
-          <FontAwesome name="arrow-left" size={36} color={currentCardIndex === 0 ? "#E2E8F0" : "#6366F1"} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.showAnswerButton} onPress={() => setShowAnswer(!showAnswer)}>
-          <Text style={styles.showAnswerText}>
-            {showAnswer ? "Hide answer" : "Show answer"}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNextCard} disabled={currentCardIndex === topic.flashcards.length - 1}>
-          <FontAwesome name="arrow-right" size={36} color={currentCardIndex === topic.flashcards.length - 1 ? "#E2E8F0" : "#6366F1"} />
-        </TouchableOpacity>
-      </View>
+      <DeckButtons topic={topic} setShowAnswer={setShowAnswer} showAnswer={showAnswer} setCurrentCardIndex={setCurrentCardIndex} currentCardIndex={currentCardIndex} />
     </View>
   );
 };
