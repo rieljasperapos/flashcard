@@ -4,18 +4,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { topicData } from "@/types/topic-data";
 import DeckHeader from "@/components/DeckHeader";
 import DeckButtons from "./DeckButtons";
+import { DeckScreenProps } from "@/types/topic-data";
 
-interface DeckScreenProps {
-  topic: topicData;
-}
-
-const DeckScreen = ({ topic }: DeckScreenProps) => {
+export default function DeckScreen({ topic }: DeckScreenProps) {
   const [showAnswer, setShowAnswer] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-
-  const handleViewClick = () => {
-    setShowAnswer(!showAnswer);
-  };
 
   return (
     <View style={styles.container}>
@@ -23,7 +16,7 @@ const DeckScreen = ({ topic }: DeckScreenProps) => {
       <Text style={styles.progress}>
         {currentCardIndex + 1} of {topic.flashcards.length} cards
       </Text>
-      <TouchableOpacity onPress={handleViewClick} style={styles.card}>
+      <TouchableOpacity onPress={() => setShowAnswer(!showAnswer)} style={styles.card}>
         <Text style={styles.question}>
           {showAnswer
             ? topic.flashcards[currentCardIndex].answer
@@ -45,7 +38,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    marginTop: 30,
     backgroundColor: "#fff",
   },
   header: {
@@ -53,6 +45,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginTop: 30,
   },
   title: {
     flex: 1,
@@ -104,5 +97,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default DeckScreen;
