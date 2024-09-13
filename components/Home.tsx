@@ -1,11 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { topicData } from "@/types/topic-data";
+import { HomePageProps } from "@/types/topic-data";
 import { Link } from "expo-router";
-
-interface HomePageProps {
-  topics: topicData[];
-}
 
 export default function HomePage({ topics }: HomePageProps) {
   return (

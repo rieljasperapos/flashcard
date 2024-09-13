@@ -10,3 +10,11 @@ export interface topicData {
   numberOfCards: number;
   flashcards: flashCards[];
 };
+
+export interface DeckScreenProps {
+  topic: topicData;
+}
+
+export interface HomePageProps {
+  topics: topicData[];
+}
