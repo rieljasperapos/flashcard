@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation, RouteProp } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
-import { topicData } from "@/types/topic-data";
-
-interface DeckScreenProps {
-  topic: topicData;
-}
+import { DeckScreenProps } from "@/types/topic-data";
 
 const DeckScreen = ({topic}: DeckScreenProps) => {
   const navigation = useNavigation();
@@ -27,10 +23,6 @@ const DeckScreen = ({topic}: DeckScreenProps) => {
     }
   };
 
-  const handleViewClick = () => {
-    setShowAnswer(!showAnswer);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -42,7 +34,7 @@ const DeckScreen = ({topic}: DeckScreenProps) => {
       <Text style={styles.progress}>
         {currentCardIndex + 1} of {topic.flashcards.length} cards
       </Text>
-      <TouchableOpacity onPress={handleViewClick} style={styles.card}>
+      <TouchableOpacity onPress={() => setShowAnswer(!showAnswer)} style={styles.card}>
         <Text style={styles.question}>
           {showAnswer ? topic.flashcards[currentCardIndex].answer : topic.flashcards[currentCardIndex].question}
         </Text>
