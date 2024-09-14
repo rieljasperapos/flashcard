@@ -1,3 +1,7 @@
+import { ReactNode } from "react";
+import { StyleProp, ViewStyle } from "react-native";
+import { SharedValue } from "react-native-reanimated";
+
 interface flashCards {
   question: string;
   answer: string;
@@ -21,9 +25,6 @@ export interface HomePageProps {
 
 export interface DeckButtonsInterface {
   topic: topicData;
-  setShowAnswer: any;
-  showAnswer: boolean;
-  setCurrentCardIndex: any;
   currentCardIndex: number;
   handleShuffle: () => void;
   handleShow: () => void;
@@ -31,4 +32,17 @@ export interface DeckButtonsInterface {
   handlePrevCard: () => void;
   handleNextCard: () => void;
   isAutoPlaying: boolean;
+}
+
+export interface DeckProps {
+  Deck: flashCards;
+}
+
+export interface FlipCardProps {
+  isFlipped: SharedValue<boolean>;
+  cardStyle: StyleProp<ViewStyle>;
+  direction: string;
+  duration: number;
+  FrontContent: () => JSX.Element;
+  BackContent: () => JSX.Element;
 }

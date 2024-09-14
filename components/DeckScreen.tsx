@@ -1,45 +1,51 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { useSharedValue } from 'react-native-reanimated';
 import DeckHeader from "@/components/DeckHeader";
 import DeckButtons from "./DeckButtons";
 import { TopicProps } from "@/types/topic-data";
 import { shuffleArray } from "@/utils/shuffleArray";
+import FlipCard from "./FlipCard";
 
 export default function DeckScreen({ topic }: TopicProps) {
-  const [showAnswer, setShowAnswer] = useState(false);
+  const isFlipped = useSharedValue(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [shuffledDeck, setShuffledDeck] = useState(topic.flashcards);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false); // AutoPlay state
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
 
-  // Show answer toggle
   const handleShow = () => {
-    setShowAnswer(!showAnswer);
+    isFlipped.value = !isFlipped.value;
   };
 
-  // Shuffle the flashcards
+
   const handleShuffle = () => {
     const shuffled = shuffleArray(topic.flashcards);
     setShuffledDeck(shuffled);
     setCurrentCardIndex(0);
-    setShowAnswer(false);
+    isFlipped.value = false;
   };
 
   const handleNextCard = () => {
     if (currentCardIndex < shuffledDeck.length - 1) {
       setCurrentCardIndex(currentCardIndex + 1);
-      setShowAnswer(false);
+      isFlipped.value = false;
     }
   };
 
   const handlePrevCard = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex(currentCardIndex - 1);
-      setShowAnswer(false);
+      isFlipped.value = false;
     }
   };
 
   const handleAutoPlay = () => {
-    setIsAutoPlaying((prev) => !prev); // Toggle AutoPlay on or off
+    setIsAutoPlaying((prev) => !prev);
   };
 
   useEffect(() => {
@@ -49,34 +55,54 @@ export default function DeckScreen({ topic }: TopicProps) {
       autoPlayInterval = setInterval(() => {
         if (cardCycleTime === 0) {
           // Show the question first
-          setShowAnswer(false);
+          isFlipped.value = false;
         }
-  
+
         if (cardCycleTime === 1500) {
           // Show the answer after 1.5 seconds
-          setShowAnswer(true);
+          isFlipped.value = true;
         }
-  
+
         if (cardCycleTime === 3000) {
           setCurrentCardIndex((prevIndex) =>
             prevIndex + 1 === shuffledDeck.length ? 0 : prevIndex + 1
           );
-          setShowAnswer(false);
+          isFlipped.value = false;
           cardCycleTime = 0;
           return;
         }
-  
+
         cardCycleTime += 100;
       }, 200);
     } else {
       clearInterval(autoPlayInterval);
       setIsAutoPlaying(false);
     }
-  
+
     return () => {
       clearInterval(autoPlayInterval);
     };
   }, [isAutoPlaying, currentCardIndex, shuffledDeck.length]);
+
+  const FrontContent = () => {
+    return (
+      <View style={styles.card}>
+        <Text style={styles.question}>
+          {shuffledDeck[currentCardIndex].question}
+        </Text>
+      </View>
+    )
+  }
+
+  const BackContent = () => {
+    return (
+      <View style={styles.card}>
+        <Text style={styles.question}>
+          {shuffledDeck[currentCardIndex].answer}
+        </Text>
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -84,18 +110,19 @@ export default function DeckScreen({ topic }: TopicProps) {
       <Text style={styles.progress}>
         {currentCardIndex + 1} of {shuffledDeck.length} cards
       </Text>
-      <TouchableOpacity onPress={handleShow} style={styles.card}>
-        <Text style={styles.question}>
-          {showAnswer
-            ? shuffledDeck[currentCardIndex].answer
-            : shuffledDeck[currentCardIndex].question}
-        </Text>
+      <TouchableOpacity onPress={handleShow}>
+        <FlipCard 
+          isFlipped={isFlipped} 
+          cardStyle={styles.flipCard}
+          direction='y'
+          duration={500}
+          FrontContent={FrontContent}
+          BackContent={BackContent}
+        />
       </TouchableOpacity>
       <DeckButtons
         topic={topic}
-        setShowAnswer={setShowAnswer}
-        showAnswer={showAnswer}
-        setCurrentCardIndex={setCurrentCardIndex}
+        // showAnswer={showAnswer}
         currentCardIndex={currentCardIndex}
         handleShuffle={handleShuffle}
         handleShow={handleShow}
@@ -141,5 +168,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "400",
     lineHeight: 30,
+  },
+  flipCard: {
+    width: '100%',
+    height: '100%',
   },
 });

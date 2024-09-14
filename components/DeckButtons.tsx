@@ -5,10 +5,8 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 export default function DeckButtons({
   topic,
-  showAnswer,
   currentCardIndex,
   handleShuffle,
-  handleShow,
   handleAutoPlay,
   handlePrevCard,
   handleNextCard,
@@ -29,14 +27,14 @@ export default function DeckButtons({
           color={currentCardIndex === 0 ? "#E2E8F0" : "#6366F1"}
         />
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.showAnswerButton}
         onPress={handleShow}
       >
         <Text style={styles.showAnswerText}>
           {showAnswer ? "Hide answer" : "Show answer"}
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <TouchableOpacity
         onPress={handleNextCard}
         disabled={currentCardIndex === topic.flashcards.length - 1}
