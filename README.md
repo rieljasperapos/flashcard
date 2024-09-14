@@ -32,7 +32,7 @@ You can start developing by editing the files inside the **app** directory. This
 
 **Flashcards**
 <br>
-<img src="./assets/Flashcards.png" alt="Flashcards" width="300"/>
+<img src="./assets/fcwithshuffleplay.png" alt="Flashcards" width="300"/>
 
 
 ## Learn more
