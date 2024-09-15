@@ -15,7 +15,7 @@ import { shuffleArray } from "@/utils/shuffleArray";
 import FlipCard from "./FlipCard";
 import ProgressBar from "./ProgressBar";
 import * as ScreenOrientation from 'expo-screen-orientation';
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 
 export default function DeckScreen({ topic }: TopicProps) {
@@ -97,6 +97,8 @@ export default function DeckScreen({ topic }: TopicProps) {
     return (
       <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
         <View style={styles.card}>
+
+
           <Text style={styles.question}>
             {shuffledDeck[currentCardIndex].question}
           </Text>
@@ -110,6 +112,7 @@ export default function DeckScreen({ topic }: TopicProps) {
     return (
       <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
         <View style={styles.card}>
+
           <Text style={styles.question}>
             {shuffledDeck[currentCardIndex].answer}
           </Text>
@@ -119,36 +122,53 @@ export default function DeckScreen({ topic }: TopicProps) {
   }
 
   async function handleToggleFullscreen() {
-    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    if (isFullscreen == false) {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    } else {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    }
     console.log('is it fullscreen? ', isFullscreen);
     setIsFullscreen(!isFullscreen);
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isFullscreen && {padding: 0}]}>
 
       {!isFullscreen &&(
-        <DeckHeader topic={topic} isFullscreen={isFullscreen} onToggleFullscreen={handleToggleFullscreen}/>
+        <>
+          <DeckHeader topic={topic} isFullscreen={isFullscreen} onToggleFullscreen={handleToggleFullscreen}/>
+          <Text style={styles.progress}>
+          {currentCardIndex + 1} of {shuffledDeck.length} cards
+          </Text>
+        </>
         
-      )}
-      
-
-      {!isFullscreen && (
-        <Text style={styles.progress}>
-        {currentCardIndex + 1} of {shuffledDeck.length} cards
-        </Text>
       )}
 
       <TouchableOpacity onPress={handleShow}>
         <FlipCard 
           isFlipped={isFlipped} 
-          cardStyle={[styles.flipCard, isFullscreen && { height: 10, width: 200}]}
+          cardStyle={[styles.flipCard, isFullscreen && { height: height, width: width}]}
           direction='y'
           duration={500}
           FrontContent={FrontContent}
           BackContent={BackContent}
         />
       </TouchableOpacity>
+
+      {isFullscreen && (
+        <>
+          <Text style={[styles.hint, { top: 10 }]}>
+            long press to enter / exit fullscreen
+          </Text>
+          <Pressable style={styles.leftSide} onPress={handlePrevCard} />
+          <Pressable style={styles.rightSide} onPress={handleNextCard} />
+        
+          <Text style={[styles.hint, { bottom: 10 }]}>
+            tap the left or right side to navigate
+          </Text>
+          
+        </>
+      )}
 
       {!isFullscreen && (
         <ProgressBar
@@ -184,6 +204,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 20,
   },
+  hint: {
+    fontSize: 12,
+    color: '#A0AEC0',
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginTop: 10, // Optional: Add some margin to position it slightly below the top
+    position: 'absolute',
+  },
   card: {
     backgroundColor: "#F7FAFC",
     borderRadius: 10,
@@ -214,5 +242,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
+  },
+  leftSide: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: '15%',
+    backgroundColor: 'rgba(0, 0, 0, 0.01)'
+  },
+  rightSide: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: '15%',
+    backgroundColor: 'rgba(0, 0, 0, 0.01)'
   },
 });
