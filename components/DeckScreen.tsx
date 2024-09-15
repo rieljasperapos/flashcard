@@ -171,6 +171,5 @@ const styles = StyleSheet.create({
   },
   flipCard: {
     width: '100%',
-    height: '100%',
   },
 });
