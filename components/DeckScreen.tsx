@@ -15,7 +15,7 @@ import { shuffleArray } from "@/utils/shuffleArray";
 import FlipCard from "./FlipCard";
 import ProgressBar from "./ProgressBar";
 import * as ScreenOrientation from 'expo-screen-orientation';
-const { height, width } = Dimensions.get('window');
+import CircularProgress from 'react-native-circular-progress-indicator';
 
 
 export default function DeckScreen({ topic }: TopicProps) {
@@ -98,7 +98,6 @@ export default function DeckScreen({ topic }: TopicProps) {
       <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
         <View style={styles.card}>
 
-
           <Text style={styles.question}>
             {shuffledDeck[currentCardIndex].question}
           </Text>
@@ -112,7 +111,6 @@ export default function DeckScreen({ topic }: TopicProps) {
     return (
       <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
         <View style={styles.card}>
-
           <Text style={styles.question}>
             {shuffledDeck[currentCardIndex].answer}
           </Text>
@@ -127,7 +125,6 @@ export default function DeckScreen({ topic }: TopicProps) {
     } else {
       await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
     }
-    console.log('is it fullscreen? ', isFullscreen);
     setIsFullscreen(!isFullscreen);
   }
 
@@ -161,8 +158,24 @@ export default function DeckScreen({ topic }: TopicProps) {
             long press to enter / exit fullscreen
           </Text>
           <Pressable style={styles.leftSide} onPress={handlePrevCard} />
+
+          <View style={styles.circularProgressContainer}>
+            <CircularProgress
+              progressValueStyle={{ fontSize: 20 }}
+              value={currentCardIndex + 1}
+              radius={30}
+              progressValueColor={'#f5945c'}
+              activeStrokeColor={'#f39c12'}
+              inActiveStrokeColor={'#9b59b6'}
+              inActiveStrokeOpacity={0.5}
+              inActiveStrokeWidth={40}
+              activeStrokeWidth={20}
+              maxValue={shuffledDeck.length}
+              duration={200}
+            />
+          </View>
+
           <Pressable style={styles.rightSide} onPress={handleNextCard} />
-        
           <Text style={[styles.hint, { bottom: 10 }]}>
             tap the left or right side to navigate
           </Text>
@@ -175,6 +188,8 @@ export default function DeckScreen({ topic }: TopicProps) {
         totalCards={shuffledDeck.length}
         currentCardIndex={currentCardIndex}/>
       )}
+
+
 
       {!isFullscreen && (
         <DeckButtons
@@ -257,5 +272,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '15%',
     backgroundColor: 'rgba(0, 0, 0, 0.01)'
+  },
+  circularProgressContainer: {
+    position: 'absolute',
+    top: 40,
+    right: 35,
   },
 });
