@@ -1,9 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { HomePageProps } from "@/types/topic-data";
 import { Link } from "expo-router";
+import { useDeck } from "@/contexts/DeckContext";
 
-export default function HomePage({ topics }: HomePageProps) {
+export default function HomePage() {
+  const { topics } = useDeck();
+
+  console.log(topics);
   return (
     <View style={styles.content}>
       <Text style={styles.sectionTitle}>Topics</Text>

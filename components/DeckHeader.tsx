@@ -1,10 +1,12 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native"
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
-import { TopicProps } from "@/types/topic-data";
+import { useDeck } from "@/contexts/DeckContext";
 
-export default function DeckHeader({topic}: TopicProps) {
+export default function DeckHeader() {
+  const { topic } = useDeck();
   const navigation = useNavigation();
+  
   return (
     <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
