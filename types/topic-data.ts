@@ -17,6 +17,7 @@ export interface topicData {
 
 export interface TopicProps {
   topic: topicData;
+  isFullscreen: boolean;
 }
 
 export interface HomePageProps {
