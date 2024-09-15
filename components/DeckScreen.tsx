@@ -14,14 +14,6 @@ export default function DeckScreen() {
     handleShow,
   } = useDeck();
 
-  if (!topic) {
-    return (
-      <View style={styles.container}>
-        <Text>No topic available</Text>
-      </View>
-    );
-  }
-
   const FrontContent = () => (
     <View style={styles.card}>
       <Text style={styles.question}>{shuffledDeck[currentCardIndex].question}</Text>
