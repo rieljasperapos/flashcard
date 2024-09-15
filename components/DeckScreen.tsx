@@ -11,6 +11,7 @@ import DeckButtons from "./DeckButtons";
 import { TopicProps } from "@/types/topic-data";
 import { shuffleArray } from "@/utils/shuffleArray";
 import FlipCard from "./FlipCard";
+import ProgressBar from "./ProgressBar";
 
 export default function DeckScreen({ topic }: TopicProps) {
   const isFlipped = useSharedValue(false);
@@ -120,6 +121,11 @@ export default function DeckScreen({ topic }: TopicProps) {
           BackContent={BackContent}
         />
       </TouchableOpacity>
+
+      <ProgressBar
+        totalCards={shuffledDeck.length}
+        currentCardIndex={currentCardIndex}/>
+      
       <DeckButtons
         topic={topic}
         // showAnswer={showAnswer}
