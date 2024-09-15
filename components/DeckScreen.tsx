@@ -4,6 +4,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Pressable,
+  Dimensions,
 } from "react-native";
 import { useSharedValue } from 'react-native-reanimated';
 import DeckHeader from "@/components/DeckHeader";
@@ -12,12 +14,16 @@ import { TopicProps } from "@/types/topic-data";
 import { shuffleArray } from "@/utils/shuffleArray";
 import FlipCard from "./FlipCard";
 import ProgressBar from "./ProgressBar";
+import * as ScreenOrientation from 'expo-screen-orientation';
+const { height } = Dimensions.get('window');
+
 
 export default function DeckScreen({ topic }: TopicProps) {
   const isFlipped = useSharedValue(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [shuffledDeck, setShuffledDeck] = useState(topic.flashcards);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleShow = () => {
     isFlipped.value = !isFlipped.value;
@@ -48,6 +54,8 @@ export default function DeckScreen({ topic }: TopicProps) {
   const handleAutoPlay = () => {
     setIsAutoPlaying((prev) => !prev);
   };
+
+
 
   useEffect(() => {
     let autoPlayInterval: any;
@@ -87,34 +95,54 @@ export default function DeckScreen({ topic }: TopicProps) {
 
   const FrontContent = () => {
     return (
-      <View style={styles.card}>
-        <Text style={styles.question}>
-          {shuffledDeck[currentCardIndex].question}
-        </Text>
-      </View>
+      <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
+        <View style={styles.card}>
+          <Text style={styles.question}>
+            {shuffledDeck[currentCardIndex].question}
+          </Text>
+        </View>
+      </Pressable>
+
     )
   }
 
   const BackContent = () => {
     return (
-      <View style={styles.card}>
-        <Text style={styles.question}>
-          {shuffledDeck[currentCardIndex].answer}
-        </Text>
-      </View>
+      <Pressable onPress={handleShow} onLongPress={handleToggleFullscreen}>
+        <View style={styles.card}>
+          <Text style={styles.question}>
+            {shuffledDeck[currentCardIndex].answer}
+          </Text>
+        </View>
+      </Pressable>
     )
+  }
+
+  async function handleToggleFullscreen() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    console.log('is it fullscreen? ', isFullscreen);
+    setIsFullscreen(!isFullscreen);
   }
 
   return (
     <View style={styles.container}>
-      <DeckHeader topic={topic} />
-      <Text style={styles.progress}>
+
+      {!isFullscreen &&(
+        <DeckHeader topic={topic} isFullscreen={isFullscreen} onToggleFullscreen={handleToggleFullscreen}/>
+        
+      )}
+      
+
+      {!isFullscreen && (
+        <Text style={styles.progress}>
         {currentCardIndex + 1} of {shuffledDeck.length} cards
-      </Text>
+        </Text>
+      )}
+
       <TouchableOpacity onPress={handleShow}>
         <FlipCard 
           isFlipped={isFlipped} 
-          cardStyle={styles.flipCard}
+          cardStyle={[styles.flipCard, isFullscreen && { height: 10, width: 200}]}
           direction='y'
           duration={500}
           FrontContent={FrontContent}
@@ -122,21 +150,24 @@ export default function DeckScreen({ topic }: TopicProps) {
         />
       </TouchableOpacity>
 
-      <ProgressBar
+      {!isFullscreen && (
+        <ProgressBar
         totalCards={shuffledDeck.length}
         currentCardIndex={currentCardIndex}/>
-      
-      <DeckButtons
-        topic={topic}
-        // showAnswer={showAnswer}
-        currentCardIndex={currentCardIndex}
-        handleShuffle={handleShuffle}
-        handleShow={handleShow}
-        handleAutoPlay={handleAutoPlay}
-        handlePrevCard={handlePrevCard}
-        handleNextCard={handleNextCard}
-        isAutoPlaying={isAutoPlaying}
-      />
+      )}
+
+      {!isFullscreen && (
+        <DeckButtons
+          topic={topic}
+          currentCardIndex={currentCardIndex}
+          handleShuffle={handleShuffle}
+          handleShow={handleShow}
+          handleAutoPlay={handleAutoPlay}
+          handlePrevCard={handlePrevCard}
+          handleNextCard={handleNextCard}
+          isAutoPlaying={isAutoPlaying}
+        />
+      )}
     </View>
   );
 }
@@ -177,5 +208,11 @@ const styles = StyleSheet.create({
   },
   flipCard: {
     width: '100%',
+    height: 400
+  },
+  fullscreenIcon: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 });
