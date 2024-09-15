@@ -3,6 +3,7 @@ import HomePage from "@/components/Home";
 import Header from "@/components/Header";
 import { staticTopicData } from "@/constants/staticData";
 
+
 export default function Index() {
   return (
     <View style={styles.container}>
