@@ -147,7 +147,7 @@ export default function DeckScreen({ topic }: TopicProps) {
       <TouchableOpacity onPress={handleShow}>
         <FlipCard 
           isFlipped={isFlipped} 
-          cardStyle={[styles.flipCard, isFullscreen && { height: height, width: width}]}
+          cardStyle={[styles.flipCard, isFullscreen && { height: '100%', width: '100%'}]}
           direction='y'
           duration={500}
           FrontContent={FrontContent}
@@ -194,7 +194,6 @@ export default function DeckScreen({ topic }: TopicProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 20,
     backgroundColor: "#fff",
   },
