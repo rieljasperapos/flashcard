@@ -2,6 +2,7 @@ import { View, StyleSheet } from "react-native";
 import HomePage from "@/components/Home";
 import Header from "@/components/Header";
 
+
 export default function Index() {
   return (
     <View style={styles.container}>

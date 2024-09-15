@@ -14,6 +14,11 @@ export interface topicData {
   flashcards: flashCards[];
 };
 
+export interface TopicProps {
+  topic: topicData;
+  isFullscreen: boolean;
+}
+
 export interface FlipCardProps {
   isFlipped: SharedValue<boolean>;
   cardStyle: StyleProp<ViewStyle>;
