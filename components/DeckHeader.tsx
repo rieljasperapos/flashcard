@@ -3,14 +3,27 @@ import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
 import { TopicProps } from "@/types/topic-data";
 
-export default function DeckHeader({topic}: TopicProps) {
+interface DeckHeaderProps extends TopicProps {
+  onToggleFullscreen: () => void;
+}
+
+export default function DeckHeader({ topic, isFullscreen, onToggleFullscreen }: DeckHeaderProps) {
   const navigation = useNavigation();
+
+  const handleOrientationChange = async () => {
+    console.log('is it fullscreen? ', isFullscreen);
+    onToggleFullscreen();
+  };
+
   return (
     <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <FontAwesome name="arrow-left" size={24} color="#718096" />
         </TouchableOpacity>
         <Text style={styles.title}>{topic.title}</Text>
+        <TouchableOpacity onPress={handleOrientationChange}>
+          <FontAwesome name="arrows-alt" size={24} color="#718096" />
+        </TouchableOpacity>
     </View>
   )
 }
