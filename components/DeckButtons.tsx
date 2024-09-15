@@ -1,22 +1,29 @@
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { DeckButtonsInterface } from "@/types/topic-data";
 import Entypo from '@expo/vector-icons/Entypo';
+import { useDeck } from "@/contexts/DeckContext";
 
-export default function DeckButtons({
-  topic,
-  currentCardIndex,
-  handleShuffle,
-  handleAutoPlay,
-  handlePrevCard,
-  handleNextCard,
-  isAutoPlaying,
-}: DeckButtonsInterface) {
+export default function DeckButtons() {
+  const {
+    topic,
+    currentCardIndex,
+    handleShuffle,
+    handleAutoPlay,
+    handlePrevCard,
+    handleNextCard,
+    isAutoPlaying,
+  } = useDeck();
+
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity onPress={handleAutoPlay}>
-        {isAutoPlaying ? <FontAwesome name="pause-circle-o" size={36} color="#6366F1" /> : <FontAwesome name="play-circle-o" size={36} color="#6366F1" />} 
+        {isAutoPlaying ? (
+          <FontAwesome name="pause-circle-o" size={36} color="#6366F1" />
+        ) : (
+          <FontAwesome name="play-circle-o" size={36} color="#6366F1" />
+        )}
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={handlePrevCard}
         disabled={currentCardIndex === 0}
@@ -27,6 +34,7 @@ export default function DeckButtons({
           color={currentCardIndex === 0 ? "#E2E8F0" : "#6366F1"}
         />
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={handleNextCard}
         disabled={currentCardIndex === topic.flashcards.length - 1}
@@ -41,12 +49,9 @@ export default function DeckButtons({
           }
         />
       </TouchableOpacity>
+
       <TouchableOpacity onPress={handleShuffle}>
-        <Entypo 
-          name="shuffle"
-          size={36}
-          color="#6366F1"
-        />
+        <Entypo name="shuffle" size={36} color="#6366F1" />
       </TouchableOpacity>
     </View>
   );
@@ -58,15 +63,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
-  },
-  showAnswerButton: {
-    backgroundColor: "#6366F1",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-  },
-  showAnswerText: {
-    color: "#fff",
-    fontSize: 16,
   },
 });

@@ -1,9 +1,12 @@
+import { DeckProvider } from "@/providers/DeckProvider";
 import { Stack } from "expo-router";
 
 export default function DecksLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="[id]" options={{ headerShown: false }} />
-    </Stack>
+    <DeckProvider>
+      <Stack>
+        <Stack.Screen name="[id]" options={{ headerShown: false }} />
+      </Stack>
+    </DeckProvider>
   );
 }
