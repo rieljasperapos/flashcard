@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { SharedValue } from "react-native-reanimated";
 
@@ -18,25 +17,6 @@ export interface topicData {
 export interface TopicProps {
   topic: topicData;
   isFullscreen: boolean;
-}
-
-export interface HomePageProps {
-  topics: topicData[];
-}
-
-export interface DeckButtonsInterface {
-  topic: topicData;
-  currentCardIndex: number;
-  handleShuffle: () => void;
-  handleShow: () => void;
-  handleAutoPlay: () => void;
-  handlePrevCard: () => void;
-  handleNextCard: () => void;
-  isAutoPlaying: boolean;
-}
-
-export interface DeckProps {
-  Deck: flashCards;
 }
 
 export interface FlipCardProps {

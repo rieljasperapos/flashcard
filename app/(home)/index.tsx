@@ -1,14 +1,13 @@
 import { View, StyleSheet } from "react-native";
 import HomePage from "@/components/Home";
 import Header from "@/components/Header";
-import { staticTopicData } from "@/constants/staticData";
 
 
 export default function Index() {
   return (
     <View style={styles.container}>
       <Header />
-      <HomePage topics={staticTopicData} />
+      <HomePage />
     </View>
   )
 }

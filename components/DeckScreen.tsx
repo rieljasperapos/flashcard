@@ -1,97 +1,23 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-  Dimensions,
-} from "react-native";
-import { useSharedValue } from 'react-native-reanimated';
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Pressable, Dimensions } from "react-native";
 import DeckHeader from "@/components/DeckHeader";
 import DeckButtons from "./DeckButtons";
-import { TopicProps } from "@/types/topic-data";
-import { shuffleArray } from "@/utils/shuffleArray";
 import FlipCard from "./FlipCard";
+
 import ProgressBar from "./ProgressBar";
 import * as ScreenOrientation from 'expo-screen-orientation';
 import CircularProgress from 'react-native-circular-progress-indicator';
 
+import { useDeck } from "@/contexts/DeckContext";
 
-export default function DeckScreen({ topic }: TopicProps) {
-  const isFlipped = useSharedValue(false);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
-  const [shuffledDeck, setShuffledDeck] = useState(topic.flashcards);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const handleShow = () => {
-    isFlipped.value = !isFlipped.value;
-  };
-
-
-  const handleShuffle = () => {
-    const shuffled = shuffleArray(topic.flashcards);
-    setShuffledDeck(shuffled);
-    setCurrentCardIndex(0);
-    isFlipped.value = false;
-  };
-
-  const handleNextCard = () => {
-    if (currentCardIndex < shuffledDeck.length - 1) {
-      setCurrentCardIndex(currentCardIndex + 1);
-      isFlipped.value = false;
-    }
-  };
-
-  const handlePrevCard = () => {
-    if (currentCardIndex > 0) {
-      setCurrentCardIndex(currentCardIndex - 1);
-      isFlipped.value = false;
-    }
-  };
-
-  const handleAutoPlay = () => {
-    setIsAutoPlaying((prev) => !prev);
-  };
-
-
-
-  useEffect(() => {
-    let autoPlayInterval: any;
-    if (isAutoPlaying && currentCardIndex <= shuffledDeck.length - 1) {
-      let cardCycleTime = 0;
-      autoPlayInterval = setInterval(() => {
-        if (cardCycleTime === 0) {
-          // Show the question first
-          isFlipped.value = false;
-        }
-
-        if (cardCycleTime === 1500) {
-          // Show the answer after 1.5 seconds
-          isFlipped.value = true;
-        }
-
-        if (cardCycleTime === 3000) {
-          setCurrentCardIndex((prevIndex) =>
-            prevIndex + 1 === shuffledDeck.length ? 0 : prevIndex + 1
-          );
-          isFlipped.value = false;
-          cardCycleTime = 0;
-          return;
-        }
-
-        cardCycleTime += 100;
-      }, 200);
-    } else {
-      clearInterval(autoPlayInterval);
-      setIsAutoPlaying(false);
-    }
-
-    return () => {
-      clearInterval(autoPlayInterval);
-    };
-  }, [isAutoPlaying, currentCardIndex, shuffledDeck.length]);
+export default function DeckScreen() {
+  const {
+    topic,
+    isFlipped,
+    currentCardIndex,
+    shuffledDeck,
+    handleShow,
+  } = useDeck();
 
   const FrontContent = () => {
     return (
@@ -118,6 +44,7 @@ export default function DeckScreen({ topic }: TopicProps) {
       </Pressable>
     )
   }
+  );
 
   async function handleToggleFullscreen() {
     if (isFullscreen == false) {
@@ -130,17 +57,19 @@ export default function DeckScreen({ topic }: TopicProps) {
 
   return (
     <View style={[styles.container, isFullscreen && {padding: 0}]}>
-
       {!isFullscreen &&(
         <>
-          <DeckHeader topic={topic} isFullscreen={isFullscreen} onToggleFullscreen={handleToggleFullscreen}/>
+          <DeckHeader onToggleFullscreen={handleToggleFullscreen}/>
           <Text style={styles.progress}>
           {currentCardIndex + 1} of {shuffledDeck.length} cards
           </Text>
         </>
         
       )}
-
+      <DeckHeader />
+      <Text style={styles.progress}>
+        {currentCardIndex + 1} of {shuffledDeck.length} cards
+      </Text>
       <TouchableOpacity onPress={handleShow}>
         <FlipCard 
           isFlipped={isFlipped} 
@@ -151,7 +80,7 @@ export default function DeckScreen({ topic }: TopicProps) {
           BackContent={BackContent}
         />
       </TouchableOpacity>
-
+      
       {isFullscreen && (
         <>
           <Text style={[styles.hint, { top: 10 }]}>
@@ -192,16 +121,7 @@ export default function DeckScreen({ topic }: TopicProps) {
 
 
       {!isFullscreen && (
-        <DeckButtons
-          topic={topic}
-          currentCardIndex={currentCardIndex}
-          handleShuffle={handleShuffle}
-          handleShow={handleShow}
-          handleAutoPlay={handleAutoPlay}
-          handlePrevCard={handlePrevCard}
-          handleNextCard={handleNextCard}
-          isAutoPlaying={isAutoPlaying}
-        />
+        <DeckButtons />
       )}
     </View>
   );
