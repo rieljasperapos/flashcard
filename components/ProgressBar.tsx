@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   activeSegment: {
-    backgroundColor: 'green',
+    backgroundColor: "#8bc34a",
   },
   inactiveSegment: {
-    backgroundColor: 'gray',
+    backgroundColor: "#E2E8F0",
   },
 });
 
