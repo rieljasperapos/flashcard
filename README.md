@@ -22,6 +22,10 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+## DEMO
+
+[App demo and Screenshots](https://drive.google.com/drive/folders/17OIyT40Miq1Q3_RUV1rQUX6RUFrO1kc6?usp=sharing)
+
 <br>
 
 ## Get started
