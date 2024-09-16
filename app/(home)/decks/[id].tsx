@@ -5,7 +5,7 @@ import { useDeck } from "@/contexts/DeckContext";
 import { useEffect } from "react";
 
 export default function FlashCard() {
-  const { topic, selectTopic } = useDeck();
+  const { selectTopic } = useDeck();
   const { id } = useLocalSearchParams();
 
   useEffect(() => {
