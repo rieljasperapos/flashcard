@@ -1,4 +1,19 @@
-# Flashcard app
+<div align="center"> 
+  <img src="./assets/branding.png" alt="QuickCards Logo"> 
+  <p><em>Efficient Learning, Anywhere, Anytime</em></p> 
+  <a href="https://github.com/your-repo/quickcards"> 
+    <img src="https://img.shields.io/badge/Version-1.0.0-brightgreen.svg" alt="Version"> 
+  </a> 
+  <a href="https://github.com/your-repo/quickcards"> 
+    <img src="https://img.shields.io/badge/Expo-v51-blue.svg" alt="Expo"> 
+  </a> 
+  <a href="https://github.com/your-repo/quickcards"> 
+    <img src="https://img.shields.io/badge/React%20Native-v0.74-blue.svg" alt="React Native"> 
+  </a> 
+  <a href="https://github.com/your-repo/quickcards/blob/main/LICENSE"> 
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"> 
+  </a> 
+</div>
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
@@ -32,7 +47,11 @@ You can start developing by editing the files inside the **app** directory. This
 
 **Flashcards**
 <br>
-<img src="./assets/fcwithshuffleplay.png" alt="Flashcards" width="300"/>
+<img src="./assets/fcuirevamp.png" alt="Flashcards" width="300"/>
+
+**Full screen mode**
+<br>
+<img src="./assets/flashcardfullscreen.png" alt="Flashcards" width="60%"/>
 
 
 ## Learn more
