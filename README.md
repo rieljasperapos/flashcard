@@ -25,10 +25,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 [App demo and Screenshots](https://drive.google.com/drive/folders/17OIyT40Miq1Q3_RUV1rQUX6RUFrO1kc6?usp=sharing)
 
-<br>
-
 ## QuickCards Screens
-![UI Screens](./assets/quickcardscreens.png)
+![UI Screens](./assets/screens.png)
 
 ## Get started
 
