@@ -27,27 +27,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 <br>
 
-## UI Mockups
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center">
-        <strong>Dashboard</strong><br>
-        <img src="./assets/quickcardshome.png" alt="Dashboard" width="300" />
-      </td>
-      <td align="center">
-        <strong>Flashcards</strong><br>
-        <img src="./assets/fcuirevamp.png" alt="Flashcards" width="300" />
-      </td>
-    </tr>
-  </table>
-
-  <br>
-
-  <strong>Full Screen Mode</strong><br>
-  <img src="./assets/flashcardfullscreen.png" alt="Full Screen Mode" width="60%"/>
-</div>
+## QuickCards Screens
+![UI Screens](./assets/Screens.png)
 
 ## Get started
 
