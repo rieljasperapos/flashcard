@@ -27,7 +27,7 @@ export default function HomePage() {
                 style={styles.icon}
               />
               <Text style={styles.cardTitle}>{topic.title}</Text>
-              <Text style={styles.cardCount}>{topic.numberOfCards} cards</Text>
+              <Text style={styles.cardCount}>{topic.flashcards.length} cards</Text>
             </TouchableOpacity>
           </Link>
         ))}
@@ -38,7 +38,7 @@ export default function HomePage() {
 
 const styles = StyleSheet.create({
   content: {
-    padding: 20,
+    padding: 24,
     backgroundColor: "#fff",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
