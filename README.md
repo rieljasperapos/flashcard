@@ -48,17 +48,27 @@ In the output, you'll find options to open the app in a
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
 ## UI Mockups
-**Dashboard**
-<br>
-<img src="./assets/Dashboard.png" alt="Dashboard" width="300"/>
 
-**Flashcards**
-<br>
-<img src="./assets/fcuirevamp.png" alt="Flashcards" width="300"/>
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <strong>Dashboard</strong><br>
+        <img src="./assets/Dashboard.png" alt="Dashboard" width="300" />
+      </td>
+      <td align="center">
+        <strong>Flashcards</strong><br>
+        <img src="./assets/fcuirevamp.png" alt="Flashcards" width="300" />
+      </td>
+    </tr>
+  </table>
 
-**Full screen mode**
-<br>
-<img src="./assets/flashcardfullscreen.png" alt="Flashcards" width="60%"/>
+  <br>
+
+  <strong>Full Screen Mode</strong><br>
+  <img src="./assets/flashcardfullscreen.png" alt="Full Screen Mode" width="60%"/>
+</div>
+
 
 
 ## Learn more
