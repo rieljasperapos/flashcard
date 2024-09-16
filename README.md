@@ -28,7 +28,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 <br>
 
 ## QuickCards Screens
-![UI Screens](./assets/Screens.png)
+![UI Screens](./assets/quickcardsuiscreens.png)
 
 ## Get started
 
