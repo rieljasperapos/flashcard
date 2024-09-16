@@ -58,7 +58,7 @@ You can start developing by editing the files inside the **app** directory. This
     <tr>
       <td align="center">
         <strong>Dashboard</strong><br>
-        <img src="./assets/Dashboard.png" alt="Dashboard" width="300" />
+        <img src="./assets/quickcardshome.png" alt="Dashboard" width="300" />
       </td>
       <td align="center">
         <strong>Flashcards</strong><br>
