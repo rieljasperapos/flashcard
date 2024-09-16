@@ -9,10 +9,8 @@ import {
 import DeckHeader from "@/components/DeckHeader";
 import DeckButtons from "./DeckButtons";
 import FlipCard from "./FlipCard";
-
 import ProgressBar from "./ProgressBar";
 import CircularProgress from "react-native-circular-progress-indicator";
-
 import { useDeck } from "@/contexts/DeckContext";
 
 export default function DeckScreen() {
