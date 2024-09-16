@@ -1,7 +1,5 @@
 import { staticTopicData } from "@/constants/staticData";
-import { shuffleArray } from "@/utils/shuffleArray";
-import { createContext, ReactNode, useContext, useState } from "react";
-import { SharedValue, useSharedValue } from "react-native-reanimated";
+import { createContext, useContext } from "react";
 import type { topicData } from "@/types/topic-data";
 
 interface DeckContextProps {
@@ -11,29 +9,32 @@ interface DeckContextProps {
   currentCardIndex: number;
   shuffledDeck: topicData["flashcards"];
   isAutoPlaying: boolean;
+  isFullscreen: boolean;
   selectTopic: (id: number) => void;
   handleShow: () => void;
   handleShuffle: () => void;
   handleNextCard: () => void;
   handlePrevCard: () => void;
   handleAutoPlay: () => void;
+  handleToggleFullscreen: () => void;
 }
 
-// Default values for the context
-const defaultTopic = staticTopicData[0];  // Assuming you always have at least one topic
+const defaultTopic = staticTopicData[0];
 const defaultDeckContext: DeckContextProps = {
   topic: defaultTopic,
   topics: staticTopicData,
-  isFlipped: { value: false },
+  isFlipped: false,
   currentCardIndex: 0,
   shuffledDeck: defaultTopic.flashcards,
   isAutoPlaying: false,
+  isFullscreen: false,
   selectTopic: () => {},
   handleShow: () => {},
   handleShuffle: () => {},
   handleNextCard: () => {},
   handlePrevCard: () => {},
   handleAutoPlay: () => {},
+  handleToggleFullscreen: () => {},
 };
 
 export const DeckContext = createContext<DeckContextProps>(defaultDeckContext);

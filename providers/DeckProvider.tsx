@@ -3,12 +3,14 @@ import { shuffleArray } from "@/utils/shuffleArray";
 import { useSharedValue } from "react-native-reanimated";
 import { staticTopicData } from "@/constants/staticData";
 import { DeckContext } from "@/contexts/DeckContext";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 export function DeckProvider({ children }: { children: ReactNode }) {
   const [topicIndex, setTopicIndex] = useState(0);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [shuffledDeck, setShuffledDeck] = useState(staticTopicData[topicIndex].flashcards);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const isFlipped = useSharedValue(false);
 
   const topic = staticTopicData[topicIndex];
@@ -48,6 +50,15 @@ export function DeckProvider({ children }: { children: ReactNode }) {
 
   const handleAutoPlay = () => {
     setIsAutoPlaying((prev) => !prev);
+  };
+
+  const handleToggleFullscreen = async () => {
+    if (isFullscreen) {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+    } else {
+      await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+    }
+    setIsFullscreen(!isFullscreen);
   };
 
   useEffect(() => {
@@ -93,12 +104,14 @@ export function DeckProvider({ children }: { children: ReactNode }) {
         currentCardIndex,
         shuffledDeck,
         isAutoPlaying,
+        isFullscreen,
         selectTopic,
         handleShow,
         handleShuffle,
         handleNextCard,
         handlePrevCard,
         handleAutoPlay,
+        handleToggleFullscreen,
       }}
     >
       {children}

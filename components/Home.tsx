@@ -5,8 +5,7 @@ import { useDeck } from "@/contexts/DeckContext";
 
 export default function HomePage() {
   const { topics } = useDeck();
-
-  console.log(topics);
+  
   return (
     <View style={styles.content}>
       <Text style={styles.sectionTitle}>Topics</Text>
