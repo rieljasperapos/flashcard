@@ -15,6 +15,6 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    backgroundColor: '#547DF4'
+    backgroundColor: '#5A67D8'
   }
 })
